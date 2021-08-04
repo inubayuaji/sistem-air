@@ -21,6 +21,7 @@ class CreatePelangganTable extends Migration
             $table->text('alamat')->nullable();
             $table->string('telepon')->nullable();
             $table->integer('jarak');
+            $table->integer('saldo')->default(0);
             $table->timestamps();
         });
     }
