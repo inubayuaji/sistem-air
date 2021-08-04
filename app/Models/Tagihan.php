@@ -15,4 +15,9 @@ class Tagihan extends Model
     {
         return $this->belongsTo(Pelanggan::class, 'pelanggan_id', 'id');
     }
+
+    public function pembayaran()
+    {
+        return $this->haMany(Pembayaran::class, 'id', 'tagihan_id');
+    }
 }

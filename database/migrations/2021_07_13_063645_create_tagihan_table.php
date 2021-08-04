@@ -22,6 +22,7 @@ class CreateTagihanTable extends Migration
             $table->integer('meter_lalu')->default(0);
             $table->integer('meter_sekarang')->default(0);
             $table->integer('jumlah_meter')->default(0);
+            $table->integer('total')->default(0);
             $table->integer('bayar')->default(0);
             $table->tinyInteger('status')
                 ->default(1)

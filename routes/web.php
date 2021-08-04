@@ -43,6 +43,8 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['auth']],
         Route::post('/{id}', 'PelangganController@update')->name('update');
         Route::post('/{id}/hapus', 'PelangganController@destroy')->name('hapus');
         Route::get('/{id}/tagihan', 'PelangganController@tagihan')->name('tagihan');
+        Route::get('/{id}/tagihan/{tagihan_id}/bayar', 'PembayaranController@index')->name('pembayaran');
+        Route::post('/{id}/tagihan/{tagihan_id}/bayar', 'PembayaranController@bayar')->name('bayar');
     });
 
     Route::group(['prefix' => 'buku-tahun', 'as' => 'buku_tahun.'], function() {

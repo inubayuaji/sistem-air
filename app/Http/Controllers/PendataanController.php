@@ -76,10 +76,22 @@ class PendataanController extends Controller
             'jumlah_meter' => 'required|numeric',
         ]);
 
+        $total = 0;
+
+        if($data['jumlah_meter'] <= 5){
+            $total = 25000 + 5000; // ini + 5000 ditanyakan apakah benar
+        }
+
+        if($data['jumlah_meter'] > 5){
+            $total = ($data['jumlah_meter'] * 4000) + 5000;
+        }
+
         $update = [
             'meter_lalu' => $data['meter_lalu'],
             'meter_sekarang' => $data['meter_sekarang'],
             'jumlah_meter' => $data['jumlah_meter'],
+            'total' => $total,
+            'status' => 2,
         ];
 
         $tagihan = Tagihan::where('id', $id)->update($update);

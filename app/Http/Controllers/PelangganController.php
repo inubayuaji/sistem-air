@@ -191,7 +191,10 @@ class PelangganController extends Controller
     protected function rowTagihanActions($model)
     {
         $actions = '';
-
+        if($model->status != 1){
+            $actions .= '<a href="' . route('admin.pelanggan.pembayaran', ['id' => $model->pelanggan->id, 'tagihan_id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-cash-register"></i></a>';
+        }
+        
         return $actions;
     }
 }
