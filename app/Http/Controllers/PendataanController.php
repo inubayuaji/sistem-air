@@ -79,7 +79,7 @@ class PendataanController extends Controller
         $total = 0;
 
         if($data['jumlah_meter'] <= 5){
-            $total = 25000 + 5000; // ini + 5000 ditanyakan apakah benar
+            $total = 25000;
         }
 
         if($data['jumlah_meter'] > 5){
@@ -139,6 +139,7 @@ class PendataanController extends Controller
             Column::make('meter_lalu'),
             Column::make('meter_sekarang'),
             Column::make('jumlah_meter'),
+            Column::make('total'),
             Column::make('bayar'),
             Column::make('action')->class('text-right'),
         ]);

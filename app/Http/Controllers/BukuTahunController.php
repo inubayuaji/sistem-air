@@ -137,6 +137,7 @@ class BukuTahunController extends Controller
             Column::make('meter_lalu'),
             Column::make('meter_sekarang'),
             Column::make('jumlah_meter'),
+            Column::make('total'),
             Column::make('bayar'),
             Column::make('action')->class('text-right'),
         ]);
