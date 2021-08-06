@@ -24,6 +24,9 @@ Route::post('/login', 'AuthController@attempt')->name('attempt');
 Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {
     Route::get('/', 'DashController@index')->name('dash');
 
+    Route::get('/ganti-password', 'AuthController@changePassword')->name('password.ganti');
+    Route::post('/ganti-password', 'AuthController@updatePassword')->name('password.ubah');
+
     Route::group(['prefix' => 'desa', 'as' => 'desa.'], function() {
         Route::get('/', 'DesaController@index')->name('index');
         Route::get('/tambah', 'DesaController@create')->name('tambah');

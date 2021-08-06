@@ -287,13 +287,8 @@ return [
 
         ['header' => 'Setting Akun'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
+            'text' => 'Ganti Password',
+            'url'  => 'admin/ganti-password',
             'icon' => 'fas fa-fw fa-lock',
         ],
     ],
