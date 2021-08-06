@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pelanggan;
 use App\Models\BukuTahun;
 use App\Models\Tagihan;
+use App\Models\Desa;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -15,11 +16,14 @@ class PelangganController extends Controller
 {
     // --- restfull function --- //
 
-    public function index(Builder $builder)
+    public function index(Builder $builder, Request $req)
     {
         // ajax data
         if (request()->ajax()) {
-            return DataTables::of(Pelanggan::query())
+            $query = Pelanggan::where('desa_id', $req->desa_id ?? Desa::first()->id)
+                ->get();
+            
+            return DataTables::of($query)
                 ->addColumn('desa', function($model){
                     return $model->desa->nama;
                 })
@@ -39,7 +43,7 @@ class PelangganController extends Controller
             Column::make('action')->class('text-right'),
         ]);
 
-        return view('pelanggan.index', ['table' => $table]);
+        return view('pelanggan.index', ['table' => $table, 'desaId' => $req->desa_id ?? Desa::first()->id]);
     }
 
     public function create()
