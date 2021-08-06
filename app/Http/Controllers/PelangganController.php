@@ -193,7 +193,9 @@ class PelangganController extends Controller
     {
         $actions = '';
         if($model->status != 1){
-            $actions .= '<a href="' . route('admin.pelanggan.pembayaran', ['id' => $model->pelanggan->id, 'tagihan_id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-cash-register"></i></a>';
+            if($model->status != 4){
+                $actions .= '<a href="' . route('admin.pelanggan.pembayaran', ['id' => $model->pelanggan->id, 'tagihan_id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-cash-register"></i></a>';
+            }
         }
         
         return $actions;
