@@ -38,6 +38,7 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['auth']],
         Route::get('/', 'PelangganController@index')->name('index');
         Route::get('/tambah', 'PelangganController@create')->name('tambah');
         Route::post('/', 'PelangganController@store')->name('simpan');
+        Route::post('/no-urut', 'PelangganController@noUrut')->name('no_urut');
         Route::get('/{id}', 'PelangganController@show')->name('detail');
         Route::get('/{id}/ubah', 'PelangganController@edit')->name('ubah');
         Route::post('/{id}', 'PelangganController@update')->name('update');
