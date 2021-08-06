@@ -154,6 +154,9 @@ class PelangganController extends Controller
                 ->get();
 
             return DataTables::of($query)
+                ->editColumn('petugas_id', function($model){
+                    return $model->petugas->nama ?? null;
+                })
                 ->editColumn('bulan', function($model)use ($bulan){
                     return $bulan[$model->bulan];
                 })

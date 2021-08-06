@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\Desa;
 use App\Models\Tagihan;
 use App\Models\Pelanggan;
@@ -87,6 +88,7 @@ class PendataanController extends Controller
         }
 
         $update = [
+            'petugas_id' => Auth::user()->id,
             'meter_lalu' => $data['meter_lalu'],
             'meter_sekarang' => $data['meter_sekarang'],
             'jumlah_meter' => $data['jumlah_meter'],
@@ -123,6 +125,9 @@ class PendataanController extends Controller
                 ->get();
 
             return DataTables::of($query)
+                ->editColumn('petugas_id', function($model){
+                    return $model->petugas->nama ?? null;
+                })
                 ->editColumn('bulan', function($model)use ($bulan){
                     return $bulan[$model->bulan];
                 })

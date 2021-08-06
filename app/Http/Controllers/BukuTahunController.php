@@ -121,6 +121,9 @@ class BukuTahunController extends Controller
                 ->get();
 
             return DataTables::of($query)
+                ->editColumn('petugas_id', function($model){
+                    return $model->petugas->nama ?? null;
+                })
                 ->editColumn('pelanggan_id', function($model){
                     return $model->pelanggan->nama;
                 })

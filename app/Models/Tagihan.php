@@ -16,6 +16,11 @@ class Tagihan extends Model
         return $this->belongsTo(Pelanggan::class, 'pelanggan_id', 'id');
     }
 
+    public function petugas()
+    {
+        return $this->hasOne(Admin::class, 'id', 'petugas_id');
+    }
+
     public function pembayaran()
     {
         return $this->haMany(Pembayaran::class, 'id', 'tagihan_id');
