@@ -21,7 +21,6 @@ class CreateAdminTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('jenis_kelamin')->comment('0: perempuan, 1: laki-laki');
-            $table->string('foto')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

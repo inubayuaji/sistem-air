@@ -42,7 +42,6 @@ class DaftarController extends Controller
 
         // membuat kolom tabel
         $table = $builder->columns([
-            Column::make('foto'),
             Column::make('nama'),
             Column::make('role'),
             Column::make('email'),
