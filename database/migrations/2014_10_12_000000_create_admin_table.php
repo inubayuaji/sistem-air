@@ -17,8 +17,6 @@ class CreateAdminTable extends Migration
             $table->id();
             $table->string('nama');
             $table->string('username')->unique();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('jenis_kelamin')->comment('0: perempuan, 1: laki-laki');
             $table->rememberToken();

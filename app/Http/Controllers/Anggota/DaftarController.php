@@ -34,9 +34,9 @@ class DaftarController extends Controller
                 ->addColumn('role', function($model){
                     return $model->getRoleNames()->first();
                 })
-                // ->addColumn('action', function($model){
-                //     return $this->rowActions($model);
-                // })
+                ->addColumn('action', function($model){
+                    return $this->rowActions($model);
+                })
                 ->make(true);
         }
 
@@ -44,9 +44,8 @@ class DaftarController extends Controller
         $table = $builder->columns([
             Column::make('nama'),
             Column::make('role'),
-            Column::make('email'),
             Column::make('jenis_kelamin'),
-            // Column::make('action'),
+            Column::make('action'),
         ]);
 
         return view('anggota.daftar.index', ['table' => $table]);
@@ -64,7 +63,6 @@ class DaftarController extends Controller
             'nama' => 'required',
             'jenis_kelamin' => 'required',
             'username' => 'required|unique:admin,username',
-            'email' => 'required|unique:admin,email',
             'password' => 'required',
             're_password' => 'required|same:password',
             'role' => 'required',
@@ -74,12 +72,12 @@ class DaftarController extends Controller
             'nama' => $data['nama'],
             'jenis_kelamin' => $data['jenis_kelamin'],
             'username' => $data['username'],
-            'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ];
 
-        $admin = Admin::insert($insert);
+        $adminId = Admin::insertGetId($insert);
 
+        $admin = Admin::find($adminId);
         $admin->assignRole($data['role']);
 
         return redirect()->route('admin.anggota.daftar.index');
@@ -105,17 +103,15 @@ class DaftarController extends Controller
             'nama' => 'required',
             'jenis_kelamin' => 'required',
             'username' => 'required|unique:admin,username,' . $id,
-            'email' => 'required|unique:admin,email,' . $id,
             'password' => '',
             're_password' => 'same:password',
-            'role' => 'required',
+            'role' => '',
         ]);
 
         $update = [
             'nama' => $data['nama'],
             'jenis_kelamin' => $data['jenis_kelamin'],
             'username' => $data['username'],
-            'email' => $data['email'],
         ];
 
         if(isset($data['password'])) {
@@ -148,9 +144,9 @@ class DaftarController extends Controller
     protected function rowActions($model)
     {
         $actions = '';
-        $actions .= view('partials.actions.ubah', ['url' => 'admin.anggota.daftar.ubah', 'id' => $model->id])->render();
-        $actions .= view('partials.actions.detail', ['url' => 'admin.anggota.daftar.detail', 'id' => $model->id])->render();
-        $actions .= view('partials.actions.hapus', ['url' => 'admin.anggota.daftar.hapus', 'id' => $model->id])->render();
+        $actions .= '<a href="' . route('admin.anggota.daftar.ubah', ['id' => $model->id]) . '" class="mr-1 btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>';
+        $actions .= '<a href="' . route('admin.anggota.daftar.detail', ['id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-eye"></i></a>';
+        // $actions .= '<button type="button" data-href="' . route('admin.anggota.daftar.hapus', ['id' => $model->id]) . '" class="mr-1 btn btn-danger btn-sm btn-hapus"><i class="fas fa-trash"></i></button>';
 
         return $actions;
     }

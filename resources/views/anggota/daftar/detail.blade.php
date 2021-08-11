@@ -29,10 +29,6 @@
                     <label>Username</label>
                     <div class="border p-2">{{ $data->username }}</div>
                 </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <div class="border p-2">{{ $data->email }}</div>
-                </div>
             </div>
         </div>
     </div>

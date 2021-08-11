@@ -57,14 +57,16 @@
 @stop
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('vendor/datatables/css/rowGroup.bootstrap4.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}" />
 @endpush
 
 @push('js')
     <script src="{{ asset('vendor/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
 
     <script>
-        $('#permission-list').bootstrapDualListbox();
+        $(document).ready(function() {
+            $('#permission-list').bootstrapDualListbox();
+        });
 
     </script>
 @endpush
