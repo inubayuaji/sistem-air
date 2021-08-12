@@ -34,66 +34,66 @@ class PermissionController extends Controller
         return view('anggota.permission.index', ['table' => $table]);
     }
 
-    public function create()
-    {
-        return view('anggota.permission.form', ['isEdit' => false]);
-    }
+    // public function create()
+    // {
+    //     return view('anggota.permission.form', ['isEdit' => false]);
+    // }
 
-    public function store(Request $req)
-    {
-        // validasi
-        $data = $req->validate([
-            'name' => 'required|unique:roles,name',
-            'deskripsi' => '',
-        ]);
+    // public function store(Request $req)
+    // {
+    //     // validasi
+    //     $data = $req->validate([
+    //         'name' => 'required|unique:roles,name',
+    //         'deskripsi' => '',
+    //     ]);
 
-        Permission::create([
-            'name' => $data['name'],
-            'deskripsi' => $data['deskripsi'],
-        ]);
+    //     Permission::create([
+    //         'name' => $data['name'],
+    //         'deskripsi' => $data['deskripsi'],
+    //     ]);
 
-        return redirect()->route('admin.anggota.permission.index');
-    }
+    //     return redirect()->route('admin.anggota.permission.index');
+    // }
 
-    public function show($id)
-    {
-        $data =  Permission::findOrFail($id);
+    // public function show($id)
+    // {
+    //     $data =  Permission::findOrFail($id);
 
-        return view('anggota.permission.detail', ['data' => $data]);
-    }
+    //     return view('anggota.permission.detail', ['data' => $data]);
+    // }
 
-    public function edit($id)
-    {
-        $data =  Permission::findOrFail($id);
+    // public function edit($id)
+    // {
+    //     $data =  Permission::findOrFail($id);
 
-        return view('anggota.permission.form', ['isEdit' => true, 'data' => $data]);
-    }
+    //     return view('anggota.permission.form', ['isEdit' => true, 'data' => $data]);
+    // }
 
-    public function update(Request $req, $id)
-    {
-        $data = $req->validate([
-            'name' => 'required|unique:roles,name',
-            'deskripsi' => '',
-        ]);
+    // public function update(Request $req, $id)
+    // {
+    //     $data = $req->validate([
+    //         'name' => 'required|unique:roles,name',
+    //         'deskripsi' => '',
+    //     ]);
 
-        $update = [
-            'name' => $data['name'],
-            'deskripsi' => $data['deskripsi'],
-        ];
+    //     $update = [
+    //         'name' => $data['name'],
+    //         'deskripsi' => $data['deskripsi'],
+    //     ];
 
-        Permission::where('id', $id)
-            ->update($update);
+    //     Permission::where('id', $id)
+    //         ->update($update);
 
-        return redirect()->route('admin.anggota.permission.index');
-    }
+    //     return redirect()->route('admin.anggota.permission.index');
+    // }
 
-    public function destroy($id)
-    {
-        Permission::findOrFail($id)
-            ->delete();
+    // public function destroy($id)
+    // {
+    //     Permission::findOrFail($id)
+    //         ->delete();
 
-        return redirect()->route('admin.anggota.permission.index');
-    }
+    //     return redirect()->route('admin.anggota.permission.index');
+    // }
 
     // --- helper function --- //
 
@@ -101,9 +101,9 @@ class PermissionController extends Controller
     protected function rowActions($model)
     {
         $actions = '';
-        $actions .= view('partials.actions.ubah', ['url' => 'admin.anggota.permission.ubah', 'id' => $model->id])->render();
-        $actions .= view('partials.actions.detail', ['url' => 'admin.anggota.permission.detail', 'id' => $model->id])->render();
-        $actions .= view('partials.actions.hapus', ['url' => 'admin.anggota.permission.hapus', 'id' => $model->id])->render();
+        // $actions .= view('partials.actions.ubah', ['url' => 'admin.anggota.permission.ubah', 'id' => $model->id])->render();
+        // $actions .= view('partials.actions.detail', ['url' => 'admin.anggota.permission.detail', 'id' => $model->id])->render();
+        // $actions .= view('partials.actions.hapus', ['url' => 'admin.anggota.permission.hapus', 'id' => $model->id])->render();
 
         return $actions;
     }

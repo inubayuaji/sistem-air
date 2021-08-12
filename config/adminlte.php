@@ -267,6 +267,7 @@ return [
         [
             'text'    => 'Anggota',
             'icon'    => 'fas fa-fw fa-id-card',
+            'can'     => 'anggota.daftar',
             'submenu' => [
                 [
                     'text' => 'Daftar',

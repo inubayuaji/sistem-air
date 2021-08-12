@@ -112,33 +112,47 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['auth']],
 
     Route::group(['prefix' => 'anggota', 'as' => 'anggota.', 'namespace' => 'Anggota'], function() {
         Route::group(['prefix' => 'daftar', 'as' => 'daftar.'], function() {
-            Route::get('/', 'DaftarController@index')->name('index');
-            Route::get('/tambah', 'DaftarController@create')->name('tambah');
-            Route::post('/', 'DaftarController@store')->name('simpan');
-            Route::get('/{id}', 'DaftarController@show')->name('detail');
-            Route::get('/{id}/ubah', 'DaftarController@edit')->name('ubah');
-            Route::post('/{id}', 'DaftarController@update')->name('update');
-            Route::post('/{id}/hapus', 'DaftarController@destroy')->name('hapus');
+            Route::get('/', 'DaftarController@index')
+                ->middleware('permission:anggota.daftar')
+                ->name('index');
+            Route::get('/tambah', 'DaftarController@create')
+                ->middleware('permission:anggota.tambah')
+                ->name('tambah');
+            Route::post('/', 'DaftarController@store')
+                ->name('simpan');
+            Route::get('/{id}', 'DaftarController@show')
+                ->middleware('permission:anggota.detail')
+                ->name('detail');
+            Route::get('/{id}/ubah', 'DaftarController@edit')
+                ->middleware('permission:anggota.ubah')
+                ->name('ubah');
+            Route::post('/{id}', 'DaftarController@update')
+                ->name('update');
+            // Route::post('/{id}/hapus', 'DaftarController@destroy')->name('hapus');
         });
 
         Route::group(['prefix' => 'role', 'as' => 'role.'], function() {
-            Route::get('/', 'RoleController@index')->name('index');
-            Route::get('/tambah', 'RoleController@create')->name('tambah');
-            Route::post('/', 'RoleController@store')->name('simpan');
-            Route::get('/{id}', 'RoleController@show')->name('detail');
-            Route::get('/{id}/ubah', 'RoleController@edit')->name('ubah');
-            Route::post('/{id}', 'RoleController@update')->name('update');
-            Route::post('/{id}/hapus', 'RoleController@destroy')->name('hapus');
+            Route::get('/', 'RoleController@index')
+                ->middleware('permission:anggota.daftar')
+                ->name('index');
+            // Route::get('/tambah', 'RoleController@create')->name('tambah');
+            // Route::post('/', 'RoleController@store')->name('simpan');
+            // Route::get('/{id}', 'RoleController@show')->name('detail');
+            // Route::get('/{id}/ubah', 'RoleController@edit')->name('ubah');
+            // Route::post('/{id}', 'RoleController@update')->name('update');
+            // Route::post('/{id}/hapus', 'RoleController@destroy')->name('hapus');
         });
 
         Route::group(['prefix' => 'permission', 'as' => 'permission.'], function() {
-            Route::get('/', 'PermissionController@index')->name('index');
-            Route::get('/tambah', 'PermissionController@create')->name('tambah');
-            Route::post('/', 'PermissionController@store')->name('simpan');
-            Route::get('/{id}', 'PermissionController@show')->name('detail');
-            Route::get('/{id}/ubah', 'PermissionController@edit')->name('ubah');
-            Route::post('/{id}', 'PermissionController@update')->name('update');
-            Route::post('/{id}/hapus', 'PermissionController@destroy')->name('hapus');
+            Route::get('/', 'PermissionController@index')
+                ->middleware('permission:anggota.daftar')
+                ->name('index');
+            // // Route::get('/tambah', 'PermissionController@create')->name('tambah');
+            // Route::post('/', 'PermissionController@store')->name('simpan');
+            // Route::get('/{id}', 'PermissionController@show')->name('detail');
+            // Route::get('/{id}/ubah', 'PermissionController@edit')->name('ubah');
+            // Route::post('/{id}', 'PermissionController@update')->name('update');
+            // Route::post('/{id}/hapus', 'PermissionController@destroy')->name('hapus');
         });
     });
 });

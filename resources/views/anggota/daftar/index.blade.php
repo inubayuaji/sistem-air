@@ -12,7 +12,9 @@
             <h3 class="card-title">Daftar Anggota</h3>
 
             <div class="card-tools">
-                <a href="{{ route('admin.anggota.daftar.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                @can('anggota.tambah')
+                    <a href="{{ route('admin.anggota.daftar.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                @endcan
             </div>
         </div>
         <div class="card-body">

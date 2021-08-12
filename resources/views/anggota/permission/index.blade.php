@@ -12,7 +12,7 @@
             <h3 class="card-title">Daftar Permission</h3>
 
             <div class="card-tools">
-                <a href="{{ route('admin.anggota.permission.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                {{-- <a href="{{ route('admin.anggota.permission.tambah') }}" class="btn btn-success btn-sm">Tambah</a> --}}
             </div>
         </div>
         <div class="card-body">

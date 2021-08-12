@@ -38,72 +38,72 @@ class RoleController extends Controller
         return view('anggota.role.index', ['table' => $table]);
     }
 
-    public function create()
-    {
-        return view('anggota.role.form', ['isEdit' => false]);
-    }
+    // public function create()
+    // {
+    //     return view('anggota.role.form', ['isEdit' => false]);
+    // }
 
-    public function store(Request $req)
-    {
-        // validasi
-        $data = $req->validate([
-            'name' => 'required|unique:roles,name',
-            'deskripsi' => '',
-            'permission' => 'required|array|filled'
-        ]);
+    // public function store(Request $req)
+    // {
+    //     // validasi
+    //     $data = $req->validate([
+    //         'name' => 'required|unique:roles,name',
+    //         'deskripsi' => '',
+    //         'permission' => 'required|array|filled'
+    //     ]);
 
-        $role = Role::create([
-            'name' => $data['name'],
-            'deskripsi' => $data['deskripsi'],
-        ]);
+    //     $role = Role::create([
+    //         'name' => $data['name'],
+    //         'deskripsi' => $data['deskripsi'],
+    //     ]);
 
-        $role->syncPermissions($data['permission']);
+    //     $role->syncPermissions($data['permission']);
 
-        return redirect()->route('admin.anggota.role.index');
-    }
+    //     return redirect()->route('admin.anggota.role.index');
+    // }
 
-    public function show($id)
-    {
-        $data =  Role::findOrFail($id);
+    // public function show($id)
+    // {
+    //     $data =  Role::findOrFail($id);
 
-        return view('anggota.role.detail', ['data' => $data]);
-    }
+    //     return view('anggota.role.detail', ['data' => $data]);
+    // }
 
-    public function edit($id)
-    {
-        $data =  Role::findOrFail($id);
+    // public function edit($id)
+    // {
+    //     $data =  Role::findOrFail($id);
 
-        return view('anggota.role.form', ['isEdit' => true, 'data' => $data]);
-    }
+    //     return view('anggota.role.form', ['isEdit' => true, 'data' => $data]);
+    // }
 
-    public function update(Request $req, $id)
-    {
-        $data = $req->validate([
-            'name' => 'required|unique:roles,name,' . $id,
-            'deskripsi' => '',
-            'permission' => 'required|array|filled'
-        ]);
+    // public function update(Request $req, $id)
+    // {
+    //     $data = $req->validate([
+    //         'name' => 'required|unique:roles,name,' . $id,
+    //         'deskripsi' => '',
+    //         'permission' => 'required|array|filled'
+    //     ]);
 
-        $update = [
-            'name' => $data['name'],
-            'deskripsi' => $data['deskripsi'],
-        ];
+    //     $update = [
+    //         'name' => $data['name'],
+    //         'deskripsi' => $data['deskripsi'],
+    //     ];
 
-        $role = Role::find($id);
+    //     $role = Role::find($id);
         
-        $role->update($update);
-        $role->syncPermissions($data['permission']);
+    //     $role->update($update);
+    //     $role->syncPermissions($data['permission']);
 
-        return redirect()->route('admin.anggota.role.index');
-    }
+    //     return redirect()->route('admin.anggota.role.index');
+    // }
 
-    public function destroy($id)
-    {
-        Role::findOrFail($id)
-            ->delete();
+    // public function destroy($id)
+    // {
+    //     Role::findOrFail($id)
+    //         ->delete();
 
-        return redirect()->route('admin.anggota.role.index');
-    }
+    //     return redirect()->route('admin.anggota.role.index');
+    // }
 
     // --- helper function --- //
 
@@ -113,9 +113,9 @@ class RoleController extends Controller
         $actions = '';
 
         if(!in_array($model->name, $this->guardRoles)){
-            $actions .= view('partials.actions.ubah', ['url' => 'admin.anggota.role.ubah', 'id' => $model->id])->render();
-            $actions .= view('partials.actions.detail', ['url' => 'admin.anggota.role.detail', 'id' => $model->id])->render();
-            $actions .= view('partials.actions.hapus', ['url' => 'admin.anggota.role.hapus', 'id' => $model->id])->render();
+            // $actions .= view('partials.actions.ubah', ['url' => 'admin.anggota.role.ubah', 'id' => $model->id])->render();
+            // $actions .= view('partials.actions.detail', ['url' => 'admin.anggota.role.detail', 'id' => $model->id])->render();
+            // $actions .= view('partials.actions.hapus', ['url' => 'admin.anggota.role.hapus', 'id' => $model->id])->render();
         }
 
         return $actions;
