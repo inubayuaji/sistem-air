@@ -76,13 +76,17 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['auth']],
     });
 
     Route::group(['prefix' => 'pendataan', 'as' => 'pendataan.'], function() {
-        Route::get('/', 'PendataanController@index')->name('index');
-        // Route::get('/tambah', 'DesaController@create')->name('tambah');
-        // Route::post('/', 'DesaController@store')->name('simpan');
-        // Route::get('/{id}', 'DesaController@show')->name('detail');
-        Route::get('/{id}/ubah', 'PendataanController@edit')->name('ubah');
-        Route::post('/{id}', 'PendataanController@update')->name('update');
-        Route::get('/{id}/tagihan', 'PendataanController@tagihan')->name('tagihan');
+        Route::get('/', 'PendataanController@index')
+            ->middleware('permission:pendataan.daftar')
+            ->name('index');
+        Route::get('/{id}/tagihan/{tagihan_id}/ubah', 'PendataanController@edit')
+            ->middleware('permission:pendataan.tagihan_ubah')
+            ->name('ubah');
+        Route::post('/{id}/tagihan/{tagihan_id}/ubah', 'PendataanController@update')
+            ->name('update');
+        Route::get('/{id}/tagihan', 'PendataanController@tagihan')
+            ->middleware('permission:pendataan.tagihan')
+            ->name('tagihan');
     });
 
     Route::group(['prefix' => 'anggota', 'as' => 'anggota.', 'namespace' => 'Anggota'], function() {

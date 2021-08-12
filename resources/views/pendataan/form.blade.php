@@ -13,7 +13,7 @@
         </div>
         <div class="card-body">
             <form role="form" method="POST"
-                action="{{ $isEdit ? route('admin.pendataan.update', ['id' => $data->id]) : route('admin.pendataan.simpan') }}">
+                action="{{ $isEdit ? route('admin.pendataan.update', ['id' => $data->pelanggan->id, 'tagihan_id' => $data->id]) : route('admin.pendataan.simpan') }}">
                 @csrf
                 <div class="form-group">
                     <label>Meter lalu</label>

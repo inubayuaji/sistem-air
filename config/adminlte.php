@@ -254,6 +254,7 @@ return [
             'text'    => 'Pendataan',
             'icon'    => 'fas fa-fw fa-edit',
             'url'     => '/admin/pendataan',
+            'can'     => 'pendataan.daftar',
         ],
         [
             'text'    => 'Pelanggan',

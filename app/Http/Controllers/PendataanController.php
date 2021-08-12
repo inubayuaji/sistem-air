@@ -39,7 +39,7 @@ class PendataanController extends Controller
         ];
 
         // ajax data
-        if (request()->ajax()) {
+        if (request()->ajax() and Auth::user()->hasPermissionTo('pendataan.daftar')) {
             $query = Pelanggan::where('desa_id', $req->desa_id ?? Desa::first()->id)
                 ->get();
 
@@ -62,14 +62,14 @@ class PendataanController extends Controller
         return view('pendataan.index', ['table' => $table, 'desaId' => $req->desa_id ?? Desa::first()->id]);
     }
 
-    public function edit($id)
+    public function edit($id, $tagihan_id)
     {
-        $data =  Tagihan::findOrFail($id);
+        $data =  Tagihan::findOrFail($tagihan_id);
 
         return view('pendataan.form', ['isEdit' => true, 'data' => $data]);
     }
 
-    public function update(Request $req, $id)
+    public function update(Request $req, $id, $tagihan_id)
     {
         $data = $req->validate([
             'meter_lalu' => 'required|numeric',
@@ -96,9 +96,9 @@ class PendataanController extends Controller
             'status' => 2,
         ];
 
-        $tagihan = Tagihan::where('id', $id)->update($update);
+        $tagihan = Tagihan::where('id', $tagihan_id)->update($update);
 
-        return redirect()->route('admin.pendataan.tagihan', ['id' => Tagihan::find($id)->pelanggan_id]);
+        return redirect()->route('admin.pendataan.tagihan', ['id' => Tagihan::find($tagihan_id)->pelanggan_id]);
     }
 
     public function tagihan(Builder $builder, $id)
@@ -131,8 +131,8 @@ class PendataanController extends Controller
                 ->editColumn('bulan', function($model)use ($bulan){
                     return $bulan[$model->bulan];
                 })
-                ->addColumn('action', function($model){
-                    return $this->rowTagihanActions($model);
+                ->addColumn('action', function($model) use ($id){
+                    return $this->rowTagihanActions($model, $id);
                 })
                 ->make(true);
         }
@@ -158,16 +158,20 @@ class PendataanController extends Controller
     protected function rowActions($model)
     {
         $actions = '';
-        $actions .= '<a href="' . route('admin.pendataan.tagihan', ['id' => $model->id]) . '#" class="mr-1 btn btn-success btn-sm"><i class="fas fa-money-bill"></i></a>';
+        if(Auth::user()->hasPermissionTo('pendataan.tagihan')){
+            $actions .= '<a href="' . route('admin.pendataan.tagihan', ['id' => $model->id]) . '#" class="mr-1 btn btn-success btn-sm"><i class="fas fa-money-bill"></i></a>';
+        }
         // $actions .= '<a href="' . route('admin.desa.detail', ['id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-eye"></i></a>';
         
         return $actions;
     }
 
-    protected function rowTagihanActions($model)
+    protected function rowTagihanActions($model, $id)
     {
         $actions = '';
-        $actions .= '<a href="' . route('admin.pendataan.ubah', ['id' => $model->id]) . '" class="mr-1 btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>';
+        if(Auth::user()->hasPermissionTo('pendataan.tagihan_ubah')){
+            $actions .= '<a href="' . route('admin.pendataan.ubah', ['id' => $id, 'tagihan_id' => $model->id]) . '" class="mr-1 btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>';
+        }
 
         return $actions;
     }
