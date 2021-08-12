@@ -53,13 +53,26 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['auth']],
     });
 
     Route::group(['prefix' => 'buku-tahun', 'as' => 'buku_tahun.'], function() {
-        Route::get('/', 'BukuTahunController@index')->name('index');
-        Route::get('/tambah', 'BukuTahunController@create')->name('tambah');
-        Route::post('/', 'BukuTahunController@store')->name('simpan');
-        Route::get('/{id}', 'BukuTahunController@show')->name('detail');
-        Route::post('/{id}/hapus', 'BukuTahunController@destroy')->name('hapus');
-        Route::get('/{id}/tagihan', 'BukuTahunController@tagihan')->name('tagihan');
-        Route::post('/tahun-aktif', 'BukuTahunController@gantiTahunAktif')->name('ganti_tahun');
+        Route::get('/', 'BukuTahunController@index')
+            ->middleware('permission:buku_tahun.daftar')
+            ->name('index');
+        Route::get('/tambah', 'BukuTahunController@create')
+            ->middleware('permission:buku_tahun.tambah')
+            ->name('tambah');
+        Route::post('/', 'BukuTahunController@store')
+            ->name('simpan');
+        Route::get('/{id}', 'BukuTahunController@show')
+            ->middleware('permission:buku_tahun.detail')    
+            ->name('detail');
+        Route::post('/{id}/hapus', 'BukuTahunController@destroy')
+            ->middleware('permission:buku_tahun.hapus')
+            ->name('hapus');
+        Route::get('/{id}/tagihan', 'BukuTahunController@tagihan')
+            ->middleware('permission:buku_tahun.tagihan')
+            ->name('tagihan');
+        Route::post('/tahun-aktif', 'BukuTahunController@gantiTahunAktif')
+            ->middleware('permission:buku_tahun.tahun_aktif')
+            ->name('ganti_tahun');
     });
 
     Route::group(['prefix' => 'pendataan', 'as' => 'pendataan.'], function() {

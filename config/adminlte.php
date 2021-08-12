@@ -248,6 +248,7 @@ return [
             'text'    => 'Buku Tahunan',
             'icon'    => 'fas fa-fw fa-book',
             'url'     => '/admin/buku-tahun',
+            'can'     => 'buku_tahun.daftar',
         ],
         [
             'text'    => 'Pendataan',

@@ -12,9 +12,13 @@
             <h3 class="card-title">Daftar Buku Tahun</h3>
 
             <div class="card-tools">
-                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                    data-target="#gantiTahunAktifModal">Ganti tahun aktif</button>
-                <a href="{{ route('admin.buku_tahun.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                @can('buku_tahun.tahun_aktif')
+                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                        data-target="#gantiTahunAktifModal">Ganti tahun aktif</button>
+                @endcan
+                @can('buku_tahun.tambah')
+                    <a href="{{ route('admin.buku_tahun.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                @endcan
             </div>
         </div>
         <div class="card-body">

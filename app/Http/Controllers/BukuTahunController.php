@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\BukuTahun;
 use App\Models\Tagihan;
 use App\Models\Pelanggan;
@@ -18,7 +19,7 @@ class BukuTahunController extends Controller
     public function index(Builder $builder)
     {
         // ajax data
-        if (request()->ajax()) {
+        if (request()->ajax() and Auth::user()->hasPermissionTo('buku_tahun.daftar')) {
             return DataTables::of(BukuTahun::query())
                 ->addColumn('action', function($model){
                     return $this->rowActions($model);
@@ -165,10 +166,14 @@ class BukuTahunController extends Controller
     protected function rowActions($model)
     {
         $actions = '';
-        $actions .= '<a href="' . route('admin.buku_tahun.tagihan', ['id' => $model->id]) . '#" class="mr-1 btn btn-success btn-sm"><i class="fas fa-money-bill"></i></a>';
-        $actions .= '<a href="' . route('admin.buku_tahun.detail', ['id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-eye"></i></a>';
+        if(Auth::user()->hasPermissionTo('buku_tahun.tagihan')){
+            $actions .= '<a href="' . route('admin.buku_tahun.tagihan', ['id' => $model->id]) . '#" class="mr-1 btn btn-success btn-sm"><i class="fas fa-money-bill"></i></a>';
+        }
+        if(Auth::user()->hasPermissionTo('buku_tahun.detail')){
+            $actions .= '<a href="' . route('admin.buku_tahun.detail', ['id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-eye"></i></a>';
+        }
         
-        if($model->status != 1){
+        if($model->status != 1 and Auth::user()->hasPermissionTo('buku_tahun.hapus')){
             $actions .= '<button type="button" data-href="' . route('admin.buku_tahun.hapus', ['id' => $model->id]) . '" class="mr-1 btn btn-danger btn-sm btn-hapus"><i class="fas fa-trash"></i></button>';
         }
         
