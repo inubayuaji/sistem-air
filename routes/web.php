@@ -46,6 +46,7 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['auth']],
         Route::get('/{id}/ubah', 'PelangganController@edit')->name('ubah');
         Route::post('/{id}', 'PelangganController@update')->name('update');
         Route::post('/{id}/hapus', 'PelangganController@destroy')->name('hapus');
+        Route::get('/{id}/kartu', 'PelangganController@kartu')->name('kartu');
         Route::get('/{id}/tagihan', 'PelangganController@tagihan')->name('tagihan');
         Route::get('/{id}/tagihan/{tagihan_id}/bayar', 'PembayaranController@index')->name('pembayaran');
         Route::post('/{id}/tagihan/{tagihan_id}/bayar', 'PembayaranController@bayar')->name('bayar');

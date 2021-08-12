@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Mpdf\Mpdf;
 use App\Models\Pelanggan;
 use App\Models\BukuTahun;
 use App\Models\Tagihan;
@@ -204,6 +205,21 @@ class PelangganController extends Controller
         ]);
     }
 
+    public function kartu($id)
+    {
+        $pelanggan = Pelanggan::findOrFail($id);
+
+        $mpdf = new Mpdf([
+            'format' => 'A5-L',
+            'margin_left' => 10,
+            'margin_right' => 10,
+        ]);
+        $mpdf->WriteHTML(view('pelanggan.kartu', ['pelanggan' => $pelanggan]));
+
+        return $mpdf->Output();
+        return view('pelanggan.kartu');
+    }
+
     // --- helper function --- //
 
     // aksi untuk per row tabel
@@ -211,7 +227,7 @@ class PelangganController extends Controller
     {
         $actions = '';
         $actions .= '<a href="' . route('admin.pelanggan.tagihan', ['id' => $model->id]) . '" class="mr-1 btn btn-success btn-sm"><i class="fas fa-money-bill"></i></a>';
-        $actions .= '<a href="#" class="mr-1 btn btn-default btn-sm"><i class="fas fa-print"></i></a>';
+        $actions .= '<a href="' . route('admin.pelanggan.kartu', ['id' => $model->id]) . '" class="mr-1 btn btn-default btn-sm"><i class="fas fa-print"></i></a>';
         $actions .= '<a href="' . route('admin.pelanggan.ubah', ['id' => $model->id]) . '" class="mr-1 btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>';
         $actions .= '<a href="' . route('admin.pelanggan.detail', ['id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-eye"></i></a>';
         $actions .= '<button type="button" data-href="' . route('admin.pelanggan.hapus', ['id' => $model->id]) . '" class="mr-1 btn btn-danger btn-sm btn-hapus"><i class="fas fa-trash"></i></button>';
