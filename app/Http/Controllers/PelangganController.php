@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Mpdf\Mpdf;
 use App\Models\Pelanggan;
 use App\Models\BukuTahun;
@@ -20,7 +21,7 @@ class PelangganController extends Controller
     public function index(Builder $builder, Request $req)
     {
         // ajax data
-        if (request()->ajax()) {
+        if (request()->ajax() and Auth::user()->hasPermissionTo('pelanggan.daftar')) {
             $query = Pelanggan::where('desa_id', $req->desa_id ?? Desa::first()->id)
                 ->get();
             
@@ -226,11 +227,21 @@ class PelangganController extends Controller
     protected function rowActions($model)
     {
         $actions = '';
-        $actions .= '<a href="' . route('admin.pelanggan.tagihan', ['id' => $model->id]) . '" class="mr-1 btn btn-success btn-sm"><i class="fas fa-money-bill"></i></a>';
-        $actions .= '<a href="' . route('admin.pelanggan.kartu', ['id' => $model->id]) . '" class="mr-1 btn btn-default btn-sm"><i class="fas fa-print"></i></a>';
-        $actions .= '<a href="' . route('admin.pelanggan.ubah', ['id' => $model->id]) . '" class="mr-1 btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>';
-        $actions .= '<a href="' . route('admin.pelanggan.detail', ['id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-eye"></i></a>';
-        $actions .= '<button type="button" data-href="' . route('admin.pelanggan.hapus', ['id' => $model->id]) . '" class="mr-1 btn btn-danger btn-sm btn-hapus"><i class="fas fa-trash"></i></button>';
+        if(Auth::user()->hasPermissionTo('pelanggan.tagihan')){
+            $actions .= '<a href="' . route('admin.pelanggan.tagihan', ['id' => $model->id]) . '" class="mr-1 btn btn-success btn-sm"><i class="fas fa-money-bill"></i></a>';
+        }
+        if(Auth::user()->hasPermissionTo('pelanggan.print')){
+            $actions .= '<a href="' . route('admin.pelanggan.kartu', ['id' => $model->id]) . '" class="mr-1 btn btn-default btn-sm"><i class="fas fa-print"></i></a>';
+        }
+        if(Auth::user()->hasPermissionTo('pelanggan.ubah')){
+            $actions .= '<a href="' . route('admin.pelanggan.ubah', ['id' => $model->id]) . '" class="mr-1 btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>';
+        }
+        if(Auth::user()->hasPermissionTo('pelanggan.detail')){
+            $actions .= '<a href="' . route('admin.pelanggan.detail', ['id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-eye"></i></a>';
+        }
+        if(Auth::user()->hasPermissionTo('pelanggan.hapus')){
+            $actions .= '<button type="button" data-href="' . route('admin.pelanggan.hapus', ['id' => $model->id]) . '" class="mr-1 btn btn-danger btn-sm btn-hapus"><i class="fas fa-trash"></i></button>';
+        }
 
         return $actions;
     }
@@ -239,7 +250,7 @@ class PelangganController extends Controller
     {
         $actions = '';
         if($model->status != 1){
-            if($model->status != 4){
+            if($model->status != 4 and Auth::user()->hasPermissionTo('pelanggan.tagihan_bayar')){
                 $actions .= '<a href="' . route('admin.pelanggan.pembayaran', ['id' => $model->pelanggan->id, 'tagihan_id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-cash-register"></i></a>';
             }
         }

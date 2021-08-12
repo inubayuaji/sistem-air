@@ -260,6 +260,7 @@ return [
             'text'    => 'Pelanggan',
             'icon'    => 'fas fa-fw fa-users',
             'url'     => '/admin/pelanggan',
+            'can'     => 'pelanggan.daftar',
         ],
 
         ['header' => 'Master'],

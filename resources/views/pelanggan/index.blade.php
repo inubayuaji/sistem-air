@@ -12,7 +12,9 @@
             <h3 class="card-title">Daftar Pelanggan</h3>
 
             <div class="card-tools">
-                <button type="button" id="urutkan" class="btn btn-default btn-sm">Urutkan</button>
+                @can('pelanggan.urutkan')
+                    <button type="button" id="urutkan" class="btn btn-default btn-sm">Urutkan</button>
+                @endcan
                 <div class="dropdown d-inline">
                     <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                         {{ \App\Models\Desa::find($desaId)->nama }}
@@ -24,7 +26,9 @@
                         @endforeach
                     </div>
                 </div>
-                <a href="{{ route('admin.pelanggan.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                @can('pelanggan.tambah')
+                    <a href="{{ route('admin.pelanggan.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                @endcan
             </div>
         </div>
         <div class="card-body">

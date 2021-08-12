@@ -38,18 +38,39 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['auth']],
     });
 
     Route::group(['prefix' => 'pelanggan', 'as' => 'pelanggan.'], function() {
-        Route::get('/', 'PelangganController@index')->name('index');
-        Route::get('/tambah', 'PelangganController@create')->name('tambah');
-        Route::post('/', 'PelangganController@store')->name('simpan');
-        Route::post('/no-urut', 'PelangganController@noUrut')->name('no_urut');
-        Route::get('/{id}', 'PelangganController@show')->name('detail');
-        Route::get('/{id}/ubah', 'PelangganController@edit')->name('ubah');
-        Route::post('/{id}', 'PelangganController@update')->name('update');
-        Route::post('/{id}/hapus', 'PelangganController@destroy')->name('hapus');
-        Route::get('/{id}/kartu', 'PelangganController@kartu')->name('kartu');
-        Route::get('/{id}/tagihan', 'PelangganController@tagihan')->name('tagihan');
-        Route::get('/{id}/tagihan/{tagihan_id}/bayar', 'PembayaranController@index')->name('pembayaran');
-        Route::post('/{id}/tagihan/{tagihan_id}/bayar', 'PembayaranController@bayar')->name('bayar');
+        Route::get('/', 'PelangganController@index')
+            ->middleware('permission:pelanggan.daftar')
+            ->name('index');
+        Route::get('/tambah', 'PelangganController@create')
+            ->middleware('permission:pelanggan.tambah')
+            ->name('tambah');
+        Route::post('/', 'PelangganController@store')
+            ->name('simpan');
+        Route::post('/no-urut', 'PelangganController@noUrut')
+            ->middleware('permission:pelanggan.urutkan')
+            ->name('no_urut');
+        Route::get('/{id}', 'PelangganController@show')
+            ->middleware('permission:pelanggan.detail')
+            ->name('detail');
+        Route::get('/{id}/ubah', 'PelangganController@edit')
+            ->middleware('permission:pelanggan.ubah')
+            ->name('ubah');
+        Route::post('/{id}', 'PelangganController@update')
+            ->name('update');
+        Route::post('/{id}/hapus', 'PelangganController@destroy')
+            ->middleware('permission:pelanggan.hapus')
+        ->name('hapus');
+        Route::get('/{id}/kartu', 'PelangganController@kartu')
+            ->middleware('permission:pelanggan.print')
+            ->name('kartu');
+        Route::get('/{id}/tagihan', 'PelangganController@tagihan')
+            ->middleware('permission:pelanggan.tagihan')
+            ->name('tagihan');
+        Route::get('/{id}/tagihan/{tagihan_id}/bayar', 'PembayaranController@index')
+            ->middleware('permission:pelanggan.tagihan_bayar')
+            ->name('pembayaran');
+        Route::post('/{id}/tagihan/{tagihan_id}/bayar', 'PembayaranController@bayar')
+            ->name('bayar');
     });
 
     Route::group(['prefix' => 'buku-tahun', 'as' => 'buku_tahun.'], function() {
