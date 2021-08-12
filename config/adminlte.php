@@ -287,6 +287,7 @@ return [
             'text' => 'Desa',
             'url'  => 'admin/desa',
             'icon' => 'fas fa-fw fa-map-signs',
+            'can'  => 'desa.daftar',
         ],
 
         ['header' => 'Setting Akun'],

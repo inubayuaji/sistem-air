@@ -12,7 +12,9 @@
             <h3 class="card-title">Daftar Desa</h3>
 
             <div class="card-tools">
-                <a href="{{ route('admin.desa.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                @can('desa.daftar')
+                    <a href="{{ route('admin.desa.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
+                @endcan
             </div>
         </div>
         <div class="card-body">

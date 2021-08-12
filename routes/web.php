@@ -28,13 +28,25 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['auth']],
     Route::post('/ganti-password', 'AuthController@updatePassword')->name('password.ubah');
 
     Route::group(['prefix' => 'desa', 'as' => 'desa.'], function() {
-        Route::get('/', 'DesaController@index')->name('index');
-        Route::get('/tambah', 'DesaController@create')->name('tambah');
-        Route::post('/', 'DesaController@store')->name('simpan');
-        Route::get('/{id}', 'DesaController@show')->name('detail');
-        Route::get('/{id}/ubah', 'DesaController@edit')->name('ubah');
-        Route::post('/{id}', 'DesaController@update')->name('update');
-        Route::post('/{id}/hapus', 'DesaController@destroy')->name('hapus');
+        Route::get('/', 'DesaController@index')
+            ->middleware('permission:desa.daftar')
+            ->name('index');
+        Route::get('/tambah', 'DesaController@create')
+            ->middleware('permission:desa.tambah')
+            ->name('tambah');
+        Route::post('/', 'DesaController@store')
+            ->name('simpan');
+        Route::get('/{id}', 'DesaController@show')
+            ->middleware('permission:desa.detail')
+            ->name('detail');
+        Route::get('/{id}/ubah', 'DesaController@edit')
+            ->middleware('permission:desa.ubah')
+            ->name('ubah');
+        Route::post('/{id}', 'DesaController@update')
+            ->name('update');
+        Route::post('/{id}/hapus', 'DesaController@destroy')
+            ->middleware('permission:desa.hapus')
+            ->name('hapus');
     });
 
     Route::group(['prefix' => 'pelanggan', 'as' => 'pelanggan.'], function() {

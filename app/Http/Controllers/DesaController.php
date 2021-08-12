@@ -102,9 +102,15 @@ class DesaController extends Controller
     protected function rowActions($model)
     {
         $actions = '';
-        $actions .= '<a href="' . route('admin.desa.ubah', ['id' => $model->id]) . '" class="mr-1 btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>';
-        $actions .= '<a href="' . route('admin.desa.detail', ['id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-eye"></i></a>';
-        $actions .= '<button type="button" data-href="' . route('admin.desa.hapus', ['id' => $model->id]) . '" class="mr-1 btn btn-danger btn-sm btn-hapus"><i class="fas fa-trash"></i></button>';
+        if(Auth::user()->hasPermissionTo('desa.ubah')){
+            $actions .= '<a href="' . route('admin.desa.ubah', ['id' => $model->id]) . '" class="mr-1 btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>';
+        }
+        if(Auth::user()->hasPermissionTo('desa.detail')){
+            $actions .= '<a href="' . route('admin.desa.detail', ['id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-eye"></i></a>';
+        }
+        if(Auth::user()->hasPermissionTo('desa.hapus')){
+            $actions .= '<button type="button" data-href="' . route('admin.desa.hapus', ['id' => $model->id]) . '" class="mr-1 btn btn-danger btn-sm btn-hapus"><i class="fas fa-trash"></i></button>';
+        }
 
         return $actions;
     }
