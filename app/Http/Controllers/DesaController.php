@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\Desa;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
