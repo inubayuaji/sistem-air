@@ -64,7 +64,6 @@ class PendataanController extends Controller
             Column::make('no'),
             Column::make('nama'),
             Column::make('telepon'),
-            Column::make('jarak'),
             Column::make('action')->class('text-right'),
         ]);
 
