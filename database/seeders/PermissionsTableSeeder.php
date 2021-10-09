@@ -154,15 +154,6 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2021-08-07 04:38:59',
                 'updated_at' => '2021-08-07 04:38:59',
             ),
-            15 => 
-            array (
-                'id' => '16',
-                'name' => 'pelanggan.urutkan',
-                'guard_name' => 'web',
-                'deskripsi' => NULL,
-                'created_at' => '2021-08-07 04:39:12',
-                'updated_at' => '2021-08-07 04:39:12',
-            ),
             16 => 
             array (
                 'id' => '17',

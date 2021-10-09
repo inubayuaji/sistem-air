@@ -12,9 +12,6 @@
             <h3 class="card-title">Daftar Pelanggan</h3>
 
             <div class="card-tools">
-                @can('pelanggan.urutkan')
-                    <button type="button" id="urutkan" class="btn btn-default btn-sm">Urutkan</button>
-                @endcan
                 @if($desaId)
                 <div class="dropdown d-inline">
                     <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
@@ -84,37 +81,6 @@
                                 }).then(function(result) {
                                     window.location =
                                         '{{ route('admin.pelanggan.index') }}';
-                                });
-                            }
-                        });
-                    }
-                });
-            });
-
-            $('#urutkan').on('click', function(event){
-                swal.fire({
-                    title: "Lanjutkan pengurutan?",
-                    text: "Nomer urut baru tidak dapat dikembalikan!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#FFC107",
-                    confirmButtonText: "Urutkan",
-                    preConfirm: false
-                }).then(function(result) {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: 'POST',
-                            url: '{{ route('admin.pelanggan.no_urut') }}',
-                            data: {
-                                _token: '{{ csrf_token() }}',
-                            },
-                            success: function() {
-                                swal.fire({
-                                    title: "Berhasil!",
-                                    text: "No berhasil diurutkan.",
-                                    icon: "success"
-                                }).then(function(result) {
-                                    window.location.reload();
                                 });
                             }
                         });

@@ -58,9 +58,6 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['auth']],
             ->name('tambah');
         Route::post('/', 'PelangganController@store')
             ->name('simpan');
-        Route::post('/no-urut', 'PelangganController@noUrut')
-            ->middleware('permission:pelanggan.urutkan')
-            ->name('no_urut');
         Route::get('/{id}', 'PelangganController@show')
             ->middleware('permission:pelanggan.detail')
             ->name('detail');

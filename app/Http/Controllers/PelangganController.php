@@ -192,29 +192,6 @@ class PelangganController extends Controller
         return view('pelanggan.tagihan', ['table' => $table]);
     }
 
-    public function noUrut(Request $req)
-    {
-        $desaId = $req->desa_id ?? Desa::first()->id;
-
-        $pelangganList = Pelanggan::where('desa_id', $desaId)
-            ->orderBy('jarak', 'asc')
-            ->get();
-
-        $noUrut = 1;
-
-        foreach($pelangganList as $pelanggan){
-            $pelanggan->no = $noUrut;
-            $pelanggan->save();
-
-            $noUrut++;
-        }
-
-        return response()->json([
-            'status' => 'berhasil',
-            'code' => 200
-        ]);
-    }
-
     public function kartu($id)
     {
         $pelanggan = Pelanggan::findOrFail($id);
