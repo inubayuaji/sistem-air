@@ -18,9 +18,7 @@ class CreatePelangganTable extends Migration
             $table->integer('no')->nullable();
             $table->foreignId('desa_id')->nullable();
             $table->string('nama');
-            $table->text('alamat')->nullable();
             $table->string('telepon')->nullable();
-            $table->integer('jarak');
             $table->integer('saldo')->default(0);
             $table->timestamps();
         });
