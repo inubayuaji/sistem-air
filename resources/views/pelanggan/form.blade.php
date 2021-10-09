@@ -7,6 +7,14 @@
 @stop
 
 @section('content')
+    @if(session()->has('error'))
+    <div class="alert alert-dismissible alert-danger">
+        <strong>Error: </strong> {{ session()->get('error') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
     <div class="card ">
         <div class="card-header">
             <h3 class="card-title">{{ $isEdit ? 'Ubah' : 'Tambah' }} Pelanggan</h3>
@@ -31,17 +39,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Alamat</label>
-                    <textarea class="form-control" name="alamat">{{ $isEdit ? $data->alamat : '' }}</textarea>
-                </div>
-                <div class="form-group">
                     <label>Telepon</label>
                     <input type="number" class="form-control" name="telepon" value="{{ $isEdit ? $data->telepon : '' }}">
-                </div>
-                <div class="form-group">
-                    <label>Jarak</label>
-                    <input type="number" class="form-control" name="jarak" value="{{ $isEdit ? $data->jarak : '' }}"
-                        required>
                 </div>
 
                 <div class="hr-line-dashed"></div>

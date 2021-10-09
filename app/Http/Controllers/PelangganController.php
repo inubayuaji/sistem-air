@@ -68,21 +68,25 @@ class PelangganController extends Controller
         $data = $req->validate([
             'nama' => 'required',
             'desa' => 'required',
-            'alamat' => '',
-            'telepon' => 'numeric',
-            'jarak' => 'required|numeric'
+            'telepon' => 'nullable|numeric',
         ]);
 
         $insert = [
             'nama' => $data['nama'],
             'desa_id' => $data['desa'],
-            'alamat' => $data['alamat'],
             'telepon' => $data['telepon'],
-            'jarak' => $data['jarak']
         ];
 
-        $pelangganId = Pelanggan::insertGetId($insert);
         $bukuTahun = BukuTahun::getTahunAktif();
+
+        // cek apakah ada buku tahun aktif
+        if(!$bukuTahun) {
+            return redirect()
+                ->back()
+                ->with('error', 'Tidak ada buku tahun aktif');
+        }
+
+        $pelangganId = Pelanggan::insertGetId($insert);
 
         // buat tagihan
         for($bulan = 1; $bulan <= 12; $bulan++){
@@ -115,17 +119,13 @@ class PelangganController extends Controller
         $data = $req->validate([
             'nama' => 'required',
             'desa' => 'required',
-            'alamat' => '',
-            'telepon' => 'numeric',
-            'jarak' => 'required|numeric'
+            'telepon' => 'nullable|numeric',
         ]);
 
         $update = [
             'nama' => $data['nama'],
             'desa_id' => $data['desa'],
-            'alamat' => $data['alamat'],
             'telepon' => $data['telepon'],
-            'jarak' => $data['jarak']
         ];
 
         Pelanggan::where('id', $id)->update($update);

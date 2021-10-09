@@ -30,16 +30,8 @@
                     <div class="p-2 border">{{ $data->desa->nama }}</div>
                 </div>
                 <div class="form-group">
-                    <label>Alamat</label>
-                    <div class="p-2 border">{{ $data->alamat }}</div>
-                </div>
-                <div class="form-group">
                     <label>Telepon</label>
                     <div class="p-2 border">{{ $data->telepon }}</div>
-                </div>
-                <div class="form-group">
-                    <label>Jarak</label>
-                    <div class="p-2 border">{{ $data->jarak }}</div>
                 </div>
             </div>
         </div>
