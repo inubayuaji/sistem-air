@@ -15,6 +15,7 @@
                 @can('pelanggan.urutkan')
                     <button type="button" id="urutkan" class="btn btn-default btn-sm">Urutkan</button>
                 @endcan
+                @if($desaId)
                 <div class="dropdown d-inline">
                     <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                         {{ \App\Models\Desa::find($desaId)->nama }}
@@ -26,6 +27,7 @@
                         @endforeach
                     </div>
                 </div>
+                @endif
                 @can('pelanggan.tambah')
                     <a href="{{ route('admin.pelanggan.tambah') }}" class="btn btn-success btn-sm">Tambah</a>
                 @endcan

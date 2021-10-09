@@ -12,6 +12,7 @@
             <h3 class="card-title">Daftar Pendataan</h3>
 
             <div class="card-tools">
+                @if($desaId)
                 <div class="dropdown">
                     <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                         {{ \App\Models\Desa::find($desaId)->nama }}
@@ -23,6 +24,7 @@
                         @endforeach
                     </div>
                 </div>
+                @endif
             </div>
         </div>
         <div class="card-body">

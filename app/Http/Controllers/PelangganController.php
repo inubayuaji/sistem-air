@@ -20,9 +20,18 @@ class PelangganController extends Controller
 
     public function index(Builder $builder, Request $req)
     {
+        $desaId = NULL;
+
+        if($req->desa_id) {
+            $desaId = $req->desa_id;
+        }
+        else {
+            $desaId = Desa::first()->id ?? NULL;
+        }
+
         // ajax data
         if (request()->ajax() and Auth::user()->hasPermissionTo('pelanggan.daftar')) {
-            $query = Pelanggan::where('desa_id', $req->desa_id ?? Desa::first()->id)
+            $query = Pelanggan::where('desa_id', $desaId)
                 ->get();
             
             return DataTables::of($query)
@@ -45,7 +54,7 @@ class PelangganController extends Controller
             Column::make('action')->class('text-right'),
         ]);
 
-        return view('pelanggan.index', ['table' => $table, 'desaId' => $req->desa_id ?? Desa::first()->id]);
+        return view('pelanggan.index', ['table' => $table, 'desaId' => $desaId]);
     }
 
     public function create()
