@@ -75,6 +75,12 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['auth']],
         Route::get('/{id}/tagihan', 'PelangganController@tagihan')
             ->middleware('permission:pelanggan.tagihan')
             ->name('tagihan');
+        Route::get('/{id}/tagihan/{tagihan_id}/edit', 'PelangganController@editTagihan')
+            ->middleware('permission:pelanggan.tagihan') // ganti permission
+            ->name('edit');
+        Route::post('/{id}/tagihan/{tagihan_id}/edit', 'PelangganController@editUpdate')
+            ->middleware('permission:pelanggan.tagihan') // ganti permission
+            ->name('update-edit');
         Route::get('/{id}/tagihan/{tagihan_id}/bayar', 'PembayaranController@index')
             ->middleware('permission:pelanggan.tagihan_bayar')
             ->name('pembayaran');

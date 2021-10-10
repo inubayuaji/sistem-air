@@ -196,6 +196,45 @@ class PelangganController extends Controller
         return view('pelanggan.tagihan', ['table' => $table]);
     }
 
+    public function editTagihan($id, $tagihanId)
+    {
+        $data = Tagihan::findOrFail($tagihanId);
+
+        return view('pelanggan.edit', ['isEdit' => true, 'id' => $id, 'tagihanId' => $tagihanId, 'data' => $data]);
+    }
+
+    public function editUpdate(Request $req, $id, $tagihanId)
+    {
+        $data = $req->validate([
+            'meter_lalu' => 'required|numeric',
+            'meter_sekarang' => 'required|numeric',
+            'jumlah_meter' => 'required|numeric',
+        ]);
+
+        $total = 0;
+
+        if($data['jumlah_meter'] <= 5){
+            $total = 25000;
+        }
+
+        if($data['jumlah_meter'] > 5){
+            $total = ($data['jumlah_meter'] * 4000) + 5000;
+        }
+
+        $update = [
+            'petugas_id' => Auth::user()->id,
+            'meter_lalu' => $data['meter_lalu'],
+            'meter_sekarang' => $data['meter_sekarang'],
+            'jumlah_meter' => $data['jumlah_meter'],
+            'total' => $total,
+            'status' => 2,
+        ];
+
+        $tagihan = Tagihan::where('id', $tagihanId)->update($update);
+
+        return redirect()->route('admin.pelanggan.tagihan', ['id' => $id]);
+    }
+
     public function kartu($id)
     {
         $pelanggan = Pelanggan::findOrFail($id);
@@ -240,6 +279,9 @@ class PelangganController extends Controller
     {
         $actions = '';
         if($model->status != 1){
+            if($model->status != 4){
+                $actions .= '<a href="' . route('admin.pelanggan.edit', ['id' => $model->pelanggan->id, 'tagihan_id' => $model->id]) . '" class="mr-1 btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>';
+            }
             if($model->status != 4 and Auth::user()->hasPermissionTo('pelanggan.tagihan_bayar')){
                 $actions .= '<a href="' . route('admin.pelanggan.pembayaran', ['id' => $model->pelanggan->id, 'tagihan_id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-cash-register"></i></a>';
             }
