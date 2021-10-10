@@ -66,12 +66,14 @@ class PelangganController extends Controller
     {
         // validasi
         $data = $req->validate([
+            'no' => 'required|unique:pelanggan,no',
             'nama' => 'required',
             'desa' => 'required',
             'telepon' => 'nullable|numeric',
         ]);
 
         $insert = [
+            'no' => $data['no'],
             'nama' => $data['nama'],
             'desa_id' => $data['desa'],
             'telepon' => $data['telepon'],
@@ -117,12 +119,14 @@ class PelangganController extends Controller
     public function update(Request $req, $id)
     {
         $data = $req->validate([
+            'no' => 'required|unique:pelanggan,no,' . $id,
             'nama' => 'required',
             'desa' => 'required',
             'telepon' => 'nullable|numeric',
         ]);
 
         $update = [
+            'no' => $data['no'],
             'nama' => $data['nama'],
             'desa_id' => $data['desa'],
             'telepon' => $data['telepon'],

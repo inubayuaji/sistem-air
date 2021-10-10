@@ -24,6 +24,10 @@
                 action="{{ $isEdit ? route('admin.pelanggan.update', ['id' => $data->id]) : route('admin.pelanggan.simpan') }}">
                 @csrf
                 <div class="form-group">
+                    <label>No</label>
+                    <input type="text" class="form-control" name="no" value="{{ $isEdit ? $data->no : '' }}" required>
+                </div>
+                <div class="form-group">
                     <label>Nama</label>
                     <input type="text" class="form-control" name="nama" value="{{ $isEdit ? $data->nama : '' }}" required>
                 </div>
