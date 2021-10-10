@@ -126,7 +126,7 @@ class BukuTahunController extends Controller
                     return $model->petugas->nama ?? null;
                 })
                 ->editColumn('pelanggan_id', function($model){
-                    return $model->pelanggan->no ?? null;
+                    return $model->pelanggan->nama ?? null;
                 })
                 ->addColumn('action', function($model){
                     return $this->rowTagihanActions($model);
