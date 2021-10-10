@@ -84,7 +84,19 @@ class BukuTahunController extends Controller
     {
         $data =  BukuTahun::findOrFail($id);
 
-        return view('buku_tahun.detail', ['data' => $data]);
+        $tagihan = Tagihan::where('buku_tahun_id', $id);
+        $totalMeter = $tagihan->sum('jumlah_meter');
+        $totalTagihan = $tagihan->sum('total');
+        $totalBayar = $tagihan->sum('bayar');
+        $totalBelumBayar = $totalTagihan - $totalBayar;
+
+        return view('buku_tahun.detail', [
+            'data' => $data,
+            'totalMeter' => $totalMeter,
+            'totalTagihan' => $totalTagihan,
+            'totalBayar' => $totalBayar,
+            'totalBelumBayar' => $totalBelumBayar
+        ]);
     }
 
     public function destroy($id)

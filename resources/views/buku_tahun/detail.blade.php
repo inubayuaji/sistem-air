@@ -35,7 +35,7 @@
         <div class="col-12 col-md-6 col-lg-3">
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h4>{{ number_format(\App\Models\Tagihan::sum('jumlah_meter'), 0, ',', '.') }} m<sup>3</sup></h4>
+                    <h4>{{ number_format($totalMeter, 0, ',', '.') }} m<sup>3</sup></h4>
 
                     <p>Total meter</p>
                 </div>
@@ -47,7 +47,7 @@
         <div class="col-12 col-md-6 col-lg-3">
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h4>Rp {{ number_format(\App\Models\Tagihan::sum('total'), 2, ',', '.') }}</h4>
+                    <h4>Rp {{ number_format($totalTagihan, 2, ',', '.') }}</h4>
 
                     <p>Total tagihan</p>
                 </div>
@@ -59,7 +59,7 @@
         <div class="col-12 col-md-6 col-lg-3">
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h4>Rp {{ number_format(\App\Models\Tagihan::sum('bayar'), 2, ',', '.') }}</h4>
+                    <h4>Rp {{ number_format($totalBayar, 2, ',', '.') }}</h4>
 
                     <p>Total bayar</p>
                 </div>
@@ -71,7 +71,7 @@
         <div class="col-12 col-md-6 col-lg-3">
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h4>Rp {{ number_format(\App\Models\Tagihan::sum('total') - \App\Models\Tagihan::sum('bayar'), 2, ',', '.') }}</h4>
+                    <h4>Rp {{ number_format($totalBelumBayar, 2, ',', '.') }}</h4>
 
                     <p>Total belum bayar</p>
                 </div>
