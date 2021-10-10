@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\Models\Desa;
 use App\Models\BukuTahun;
 use App\Models\Tagihan;
 use App\Models\Pelanggan;
@@ -114,11 +115,22 @@ class BukuTahunController extends Controller
             11 => 'November',
             12 => 'Desember',
         ];
+
+        $desaId = NULL;
+
+        if($req->desa_id) {
+            $desaId = $req->desa_id;
+        }
+        else {
+            $desaId = Desa::first()->id ?? NULL;
+        }
         
         // ajax data
         if (request()->ajax()) {
             $query = Tagihan::where('bulan', $req->bulan ?? 1)
+                ->join('pelanggan', 'pelanggan.id', 'tagihan.pelanggan_id')
                 ->where('buku_tahun_id', $id)
+                ->where('desa_id', $desaId)
                 ->get();
 
             return DataTables::of($query)
@@ -149,7 +161,8 @@ class BukuTahunController extends Controller
         return view('buku_tahun.tagihan', [
             'table' => $table,
             'id' => $id,
-            'bulan' => $bulan[$req->bulan ?? 1]
+            'bulan' => $bulan[$req->bulan ?? 1],
+            'desaId' => $desaId,
         ]);
     }
 

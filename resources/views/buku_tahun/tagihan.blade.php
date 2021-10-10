@@ -12,7 +12,20 @@
             <h3 class="card-title">Daftar Tagihan</h3>
 
             <div class="card-tools">
-                <div class="dropdown">
+                @if($desaId)
+                <div class="dropdown d-inline">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                        {{ \App\Models\Desa::find($desaId)->nama }}
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        @foreach (\App\Models\Desa::all() as $desa)
+                            <a class="dropdown-item"
+                                href="{{ route('admin.buku_tahun.tagihan', ['id' => $id, 'desa_id' => $desa->id]) }}">{{ $desa->nama }}</a>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+                <div class="dropdown d-inline">
                     <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                         {{ $bulan }}
                     </button>
