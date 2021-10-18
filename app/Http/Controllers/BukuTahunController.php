@@ -16,6 +16,20 @@ use Yajra\DataTables\Html\Column;
 class BukuTahunController extends Controller
 {
     // --- restfull function --- //
+    private $bulan = [
+        1 => 'Januari',
+        2 => 'Februari',
+        3 => 'Maret',
+        4 => 'April',
+        5 => 'Mei',
+        6 => 'Juni',
+        7 => 'Juli',
+        8 => 'Agustus',
+        9 => 'September',
+        10 => 'Oktober',
+        11 => 'November',
+        12 => 'Desember',
+    ];
 
     public function index(Builder $builder)
     {
@@ -90,12 +104,27 @@ class BukuTahunController extends Controller
         $totalBayar = $tagihan->sum('bayar');
         $totalBelumBayar = $totalTagihan - $totalBayar;
 
+        $detailBulan = [];
+
+        foreach($this->bulan as $i => $b) {
+            $tagihanBulan = $tagihan->where('bulan', $i);
+
+            array_push($detailBulan, [
+                'bulan' => $b,
+                'totalMeter' => $tagihanBulan->sum('jumlah_meter'),
+                'totalTagihan' => $tagihanBulan->sum('total'),
+                'totalBayar' => $tagihanBulan->sum('bayar'),
+                'totalBelumBayar' => $tagihanBulan->sum('total') - $tagihanBulan->sum('bayar')
+            ]);
+        }
+
         return view('buku_tahun.detail', [
             'data' => $data,
             'totalMeter' => $totalMeter,
             'totalTagihan' => $totalTagihan,
             'totalBayar' => $totalBayar,
-            'totalBelumBayar' => $totalBelumBayar
+            'totalBelumBayar' => $totalBelumBayar,
+            'detailBulan' => $detailBulan,
         ]);
     }
 
@@ -113,21 +142,6 @@ class BukuTahunController extends Controller
 
     public function tagihan(Builder $builder, Request $req, $id)
     {
-        $bulan = [
-            1 => 'Januari',
-            2 => 'Februari',
-            3 => 'Maret',
-            4 => 'April',
-            5 => 'Mei',
-            6 => 'Juni',
-            7 => 'Juli',
-            8 => 'Agustus',
-            9 => 'September',
-            10 => 'Oktober',
-            11 => 'November',
-            12 => 'Desember',
-        ];
-
         $desaId = NULL;
 
         if($req->desa_id) {
@@ -173,7 +187,7 @@ class BukuTahunController extends Controller
         return view('buku_tahun.tagihan', [
             'table' => $table,
             'id' => $id,
-            'bulan' => $bulan[$req->bulan ?? 1],
+            'bulan' => $this->bulan[$req->bulan ?? 1],
             'desaId' => $desaId,
         ]);
     }
