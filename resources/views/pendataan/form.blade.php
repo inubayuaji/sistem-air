@@ -17,15 +17,15 @@
                 @csrf
                 <div class="form-group">
                     <label>Meter lalu</label>
-                    <input type="number" class="form-control" name="meter_lalu" value="{{ $isEdit ? $data->meter_lalu : '' }}" required>
+                    <input id="meter_lalu" type="number" class="form-control" name="meter_lalu" value="{{ $isEdit ? $data->meter_lalu : '' }}" readonly>
                 </div>
                 <div class="form-group">
                     <label>Meter sekarang</label>
-                    <input type="number" class="form-control" name="meter_sekarang" value="{{ $isEdit ? $data->meter_sekarang : '' }}" required>
+                    <input id="meter_sekarang" type="number" class="form-control" name="meter_sekarang" value="{{ $isEdit ? $data->meter_sekarang : '' }}" required>
                 </div>
                 <div class="form-group">
                     <label>Jumlah meter</label>
-                    <input type="number" class="form-control" name="jumlah_meter" value="{{ $isEdit ? $data->junlah_meter : '' }}" required>
+                    <input id="jumlah_meter" type="number" class="form-control" name="jumlah_meter" value="{{ $isEdit ? $data->jumlah_meter : '' }}" readonly>
                 </div>
 
                 <div class="hr-line-dashed"></div>
@@ -38,3 +38,15 @@
         </div>
     </div>
 @stop
+
+@section('js')
+<script>
+    const meterLalu = document.querySelector('#meter_lalu');
+    const meterSekarang = document.querySelector('#meter_sekarang');
+    const jumlahMeter = document.querySelector('#jumlah_meter');
+
+    meterSekarang.addEventListener('keyup', function() {
+        jumlahMeter.value = meterSekarang.value - meterLalu.value;
+    });
+</script>
+@endsection

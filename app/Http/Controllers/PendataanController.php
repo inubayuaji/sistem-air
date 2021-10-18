@@ -6,6 +6,7 @@ use Auth;
 use App\Models\Desa;
 use App\Models\Tagihan;
 use App\Models\Pelanggan;
+use App\Models\BukuTahun;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -73,6 +74,20 @@ class PendataanController extends Controller
     public function edit($id, $tagihan_id)
     {
         $data =  Tagihan::findOrFail($tagihan_id);
+        $data->meter_lalu = 0;
+        $data->jumlah_meter = 0;
+
+        if($data->bulan > 1) {
+            $data->meter_lalu = Tagihan::where('pelanggan_id', $data->pelanggan_id)
+                ->where('bulan', $data->bulan - 1)
+                ->where('buku_tahun_id', BukuTahun::getTahunAktif()->id)
+                ->first()
+                ->meter_sekarang;
+        }
+
+        if($data->meter_lalu < $data->meter_sekarang){
+            $data->jumlah_meter = $data->meter_sekarang - $data->meter_lalu;
+        }
 
         return view('pendataan.form', ['isEdit' => true, 'data' => $data]);
     }
@@ -82,7 +97,7 @@ class PendataanController extends Controller
         $data = $req->validate([
             'meter_lalu' => 'required|numeric',
             'meter_sekarang' => 'required|numeric',
-            'jumlah_meter' => 'required|numeric',
+            'jumlah_meter' => 'required|numeric|min:0',
         ]);
 
         $total = 0;
@@ -129,6 +144,7 @@ class PendataanController extends Controller
         // ajax data
         if (request()->ajax()) {
             $query = Tagihan::where('pelanggan_id', $id)
+                ->where('buku_tahun_id', BukuTahun::getTahunAktif()->id)
                 ->orderBy('bulan', 'asc')
                 ->get();
 
