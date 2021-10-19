@@ -165,6 +165,7 @@ class PelangganController extends Controller
         // ajax data
         if (request()->ajax()) {
             $query = Tagihan::where('pelanggan_id', $id)
+                ->where('buku_tahun_id', BukuTahun::getTahunAktif()->id)
                 ->orderBy('bulan', 'asc')
                 ->get();
 
