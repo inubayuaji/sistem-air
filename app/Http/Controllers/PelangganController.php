@@ -191,7 +191,7 @@ class PelangganController extends Controller
             Column::make('jumlah_meter'),
             Column::make('total'),
             Column::make('bayar'),
-            Column::make('action')->class('text-right'),
+            Column::make('action')->class('text-right')->width(100),
         ]);
 
         return view('pelanggan.tagihan', ['table' => $table]);
@@ -286,8 +286,20 @@ class PelangganController extends Controller
             if($model->status != 4 and Auth::user()->hasPermissionTo('pelanggan.tagihan_bayar')){
                 $actions .= '<a href="' . route('admin.pelanggan.pembayaran', ['id' => $model->pelanggan->id, 'tagihan_id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-cash-register"></i></a>';
             }
+            $actions .= '<a href="#" data-tagihan="' . $this->printData($model) .'"  class="btn-print mr-1 btn btn-success btn-sm"><i class="fas fa-file-invoice-dollar"></i></a>';
         }
         
         return $actions;
+    }
+
+    protected function printData($model)
+    {
+        return htmlspecialchars(json_encode([
+            'jumlah_meter' => $model->jumlah_meter,
+            'total' => $model->total,
+            'bayar' => $model->bayar,
+            'kurang' => $model->total - $model->bayar,
+            'tanggal' => $model->updated_at->format('d-m-Y')
+        ]), ENT_QUOTES);
     }
 }

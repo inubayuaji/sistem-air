@@ -21,6 +21,32 @@
             </div>
         </div>
     </div>
+
+    <div id="print-invoice" class="d-none">
+        <p class="mb-4">Struct bukti pembayaran</p>
+        <table>
+            <tr>
+                <td>Tanggal</td>
+                <td>: <span id="tagihan-tanggal"></span></td>
+            </tr>
+            <tr>
+                <td>Penggunaan</td>
+                <td>: <span id="tagihan-meter"></span>m<sup>2</sup></td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td>: Rp <span id="tagihan-total"></span></td>
+            </tr>
+            <tr>
+                <td>Bayar</td>
+                <td>: Rp <span id="tagihan-bayar"></span></td>
+            </tr>
+            <tr>
+                <td>Sisa</td>
+                <td>: Rp <span id="tagihan-kurang"></span></td>
+            </tr>
+        </table>
+    </div>
 @stop
 
 @section('css')
@@ -28,12 +54,31 @@
     <link rel="stylesheet" href="{{ asset('vendor/sweetalert2/sweetalert2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/datatables/css/rowGroup.bootstrap4.min.css') }}" />
+
+    <style>
+        #print-invoice {
+            @media print {
+                @page {
+                    font-family: 'lucida console';
+                    font-size: 12px;
+                }
+
+                #print-invoice {
+                    display: block;
+                }
+                #print-invoice table, tr, td {
+                    border: none;
+                }
+            }
+        }
+    </style>
 @stop
 
 @section('js')
     <script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('vendor/print.min.js') }}"></script>
 
     {!! $table->scripts() !!}
 
@@ -71,6 +116,18 @@
                         });
                     }
                 });
+            });
+
+            $('body').on('click', '.btn-print', function(e) {
+                var tagihan = $(this).data('tagihan');
+
+                $('#tagihan-meter').text(tagihan.jumlah_meter);
+                $('#tagihan-tanggal').text(tagihan.tanggal);
+                $('#tagihan-total').text(tagihan.total);
+                $('#tagihan-bayar').text(tagihan.bayar);
+                $('#tagihan-kurang').text(tagihan.kurang);
+
+                printJS({printable: 'print-invoice', type: 'html'});
             });
         });
 
