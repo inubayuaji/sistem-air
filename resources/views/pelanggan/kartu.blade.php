@@ -17,7 +17,9 @@
     <table style="width: 100%;">
         <tr>
             <td style="width: 20%; text-align: right;">
-                <div style="width: 50px; height: 50px; background: #ccc;">logo</div>
+                <div style="height: 50px; background: #ccc;">
+                    <img src="{{ asset('logo.png') }}">
+                </div>
             </td>
             <td style="width: 60%; text-align: center;">
                 <h2 style="font-size: 14px;">SUMUR ARTETIS</h2>
