@@ -18,7 +18,8 @@ class Tagihan extends Model
 
     public function petugas()
     {
-        return $this->hasOne(Admin::class, 'id', 'petugas_id');
+        return $this->hasOne(Admin::class, 'id', 'petugas_id')
+            ->withTrashed();
     }
 
     public function pembayaran()
