@@ -17,8 +17,8 @@
     <table style="width: 100%;">
         <tr>
             <td style="width: 20%; text-align: right;">
-                <div style="height: 50px; background: #ccc;">
-                    <img src="{{ asset('logo.png') }}">
+                <div style="width: 50px; background: #ccc;">
+                    <img style="width: 200%;" src="{{ asset('logo.png') }}">
                 </div>
             </td>
             <td style="width: 60%; text-align: center;">
