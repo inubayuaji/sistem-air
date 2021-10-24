@@ -143,7 +143,7 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['auth']],
                 ->name('ubah');
             Route::post('/{id}', 'DaftarController@update')
                 ->name('update');
-            // Route::post('/{id}/hapus', 'DaftarController@destroy')->name('hapus');
+            Route::post('/{id}/hapus', 'DaftarController@destroy')->name('hapus');
         });
 
         Route::group(['prefix' => 'role', 'as' => 'role.'], function() {

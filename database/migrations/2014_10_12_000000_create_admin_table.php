@@ -21,6 +21,7 @@ class CreateAdminTable extends Migration
             $table->boolean('jenis_kelamin')->comment('0: perempuan, 1: laki-laki');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

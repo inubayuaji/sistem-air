@@ -131,13 +131,13 @@ class DaftarController extends Controller
         return redirect()->route('admin.anggota.daftar.index');
     }
 
-    // public function destroy($id)
-    // {
-    //     Admin::findOrFail($id)
-    //         ->delete();
+    public function destroy($id)
+    {
+        Admin::findOrFail($id)
+            ->delete();
 
-    //     return redirect()->route('admin.anggota.daftar.index');
-    // }
+        return redirect()->route('admin.anggota.daftar.index');
+    }
 
     // --- helper function --- //
 
@@ -151,8 +151,9 @@ class DaftarController extends Controller
         if(Auth::user()->hasPermissionTo('anggota.detail')){
             $actions .= '<a href="' . route('admin.anggota.daftar.detail', ['id' => $model->id]) . '" class="mr-1 btn btn-info btn-sm"><i class="fas fa-eye"></i></a>';
         }
-        // $actions .= '<button type="button" data-href="' . route('admin.anggota.daftar.hapus', ['id' => $model->id]) . '" class="mr-1 btn btn-danger btn-sm btn-hapus"><i class="fas fa-trash"></i></button>';
-
+        if(Auth::user()->hasPermissionTo('anggota.hapus') and $model->id != 1){
+            $actions .= '<button type="button" data-href="' . route('admin.anggota.daftar.hapus', ['id' => $model->id]) . '" class="mr-1 btn btn-danger btn-sm btn-hapus"><i class="fas fa-trash"></i></button>';
+        }
         return $actions;
     }
 }
